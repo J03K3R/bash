@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# the command within the curly braces will be exicuted on the remote servers.
+
+function execute_command ( )
+{
+  ssh administrator@$1 "command to run here"
+}
+
+#reads the server names from file serverlist
+
+echo "!!! <EXECUTING COMMAND> !!!"
+for host in $( cat ~/serverlist )
+do
+    execute_command ${host} &
+done
+
+echo
+#wait for spawned processes finish
+wait
+
+#https://stackoverflow.com/questions/8259384/how-can-i-write-a-unix-script-to-quickly-start-a-service-on-multiple-remote-serv?rq=1
